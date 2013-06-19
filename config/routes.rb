@@ -1,4 +1,14 @@
 Auth::Application.routes.draw do
+  
+  # new action 'sign_up' is the same as 'users#new'
+  get "sign_up" => "users#new", :as => "sign_up"
+  
+  # set our root to show the form
+  root :to => "users#new"
+  
+  # support the create action as well
+  resources :users
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
