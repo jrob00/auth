@@ -150,7 +150,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bcrypt-ruby
+  bcrypt-ruby (~> 3.0.0)
   capybara
   coffee-rails (~> 4.0.0)
   factory_girl_rails

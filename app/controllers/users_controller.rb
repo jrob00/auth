@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  
+  # make sure we're logged in before we edit update or destroy
+  before_filter :authorize, only: [:edit, :update, :destroy]
+  
   # GET /users
   def index
     @users = User.all
@@ -24,7 +28,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to root_url, notice: 'User was successfully created.'
+      # log the user in automatically
+      session[:user_id] = @user.id
+      
+      redirect_to root_url, notice: 'Thank you for signing up!'
     else
       render action: 'new'
     end
@@ -53,6 +60,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:email, :password_hash, :password_salt)
+      params.require(:user).permit(:email, :password, :password_confirmation)
     end
 end
